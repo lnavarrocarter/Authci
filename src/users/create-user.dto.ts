@@ -1,11 +1,18 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class CreateUserDTO {
+export class UserDTO {
 
     @IsNotEmpty()
     readonly username: string;
 
     @IsNotEmpty()
-    readonly password: number;
+    readonly password: string;
 
+}
+
+export class UserRO {
+    id: string;
+    username : string;
+    created : Date;
+    token?: string;
 }

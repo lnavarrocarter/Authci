@@ -1,13 +1,25 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './users/user.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Connection } from 'typeorm';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpErrorFilter } from './shared/http-error.filter';
+
+
 
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/authci'),
+    TypeOrmModule.forRoot(),
     UserModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: HttpErrorFilter,
+    }
+  ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private readonly connection: Connection) {}
+}

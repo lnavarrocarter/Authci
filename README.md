@@ -1,6 +1,6 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-  <a href="http://lnavarro.cl/authCi" target="_blank"><img src="http://server.lnavarro.cl/images/authci%20Logo.PNG" width="320"></a>
+  <a href="http://lnavarro.cl/authCi" target="_blank"><img src="http://server.lnavarro.cl/images/authci%20Logo.PNG" width="100"></a>
 </p>
 
 ## Description

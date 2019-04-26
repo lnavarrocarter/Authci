@@ -5,19 +5,20 @@ import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  canActivate(
+  async canActivate(
     context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  ): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     if (!request.headers.authorization) {
         return false;
     }
-    request.user = this.validateToken(request.headers.authorization);
+    request.user = await this.validateToken(request.headers.authorization);
+    return true;
   }
 
-  validateToken(auth: string) {
+  async validateToken(auth: string) {
       if (auth.split(' ')[0] !== 'Bearer'){
-          throw new HttpException('invalida Token', HttpStatus.FORBIDDEN);
+          throw new HttpException('Token Invalido', HttpStatus.FORBIDDEN);
       }
 
       const token = auth.split(' ')[1];

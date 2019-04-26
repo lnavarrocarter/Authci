@@ -29,7 +29,7 @@ export class UserEntity {
          const { id, created, username, token } = this;
          const responseObject: any = { id, created, username}
          if (showToken){
-             responseObject.token = token;
+             responseObject.token = `Bearer ${token}`;
          }
 
          return responseObject;

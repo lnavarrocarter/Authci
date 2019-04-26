@@ -13,6 +13,14 @@ export class UserServices {
     private userRepository: Repository<UserEntity>,
     ) {}
 
+  async showOne(id: number): Promise<UserRO> {
+    const user  = await this.userRepository.findOne({ where : { id }});
+    if (!user) {
+      throw new HttpException('Error en la consulta del usuario', HttpStatus.BAD_REQUEST);
+    }
+    return user.toResponseObject(false);
+  }
+
   async showAll(): Promise<UserRO[]> {
     const users =  await this.userRepository.find();
     return users.map(user => user.toResponseObject(false));
@@ -20,7 +28,7 @@ export class UserServices {
 
   async login(data: UserDTO): Promise<UserRO> {
     const  { username, password } = data;
-    const user = await this.userRepository.findOne({where: {username}});
+    const user = await this.userRepository.findOne({ where: { username }});
     if (!user || !( await user.comparePassword(password))){
       throw new HttpException('Usuario o contraseña incorrecta', HttpStatus.BAD_REQUEST);
     }

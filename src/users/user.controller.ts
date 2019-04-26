@@ -8,11 +8,24 @@ import { UserDTO } from './create-user.dto';
 export class UserController {
     constructor(public userService: UserServices) {}
     @Get('api/users')
+    @UsePipes(new ValidationPipe())
+    @UseGuards(new AuthGuard())
     async showAllUser(@Res() res) {
         const allUsers = await this.userService.showAll();
         return res.status(HttpStatus.OK).json({
             message : 'Usuario(s) encontrado(s) correctamente.',
             user : allUsers,
+        });
+    }
+
+    @Get('api/users/:id')
+    @UseGuards(new AuthGuard())
+    @UsePipes(new ValidationPipe())
+    async showOneUser(@Param('id') id, @Res() res) {
+        const User = await this.userService.showOne(id);
+        return res.status(HttpStatus.OK).json({
+            message : 'Usuario encontrado correctamente.',
+            user : User,
         });
     }
 

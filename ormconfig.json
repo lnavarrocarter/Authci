@@ -1,10 +1,10 @@
 {
     "type": "mysql",
-    "host": "localhost",
+    "host": "ncai.cl",
     "port": 3306,
-    "username": "root",
-    "password": "",
-    "database": "authci",
+    "username": "cnc46140_autci",
+    "password": "qweasd123",
+    "database": "cnc46140_authci",
     "entities": ["./src/**/*.entity{.ts,.js}", "./dist/**/*.entity{.ts,.js}"],
     "synchronize": true
 }

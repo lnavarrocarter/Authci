@@ -47,4 +47,8 @@ export class UserServices {
     return user.toResponseObject();
   }
 
+  async findOneByToken(token: any){
+    return true;
+  }
+
 }

@@ -5,10 +5,9 @@ import { Connection } from 'typeorm';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpErrorFilter } from './shared/http-error.filter';
 import { UploadModule } from './upload/upload.module';
+
 import * as multer from 'multer';
-
-
-
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -19,6 +18,7 @@ import * as multer from 'multer';
     }),
     UserModule,
     UploadModule,
+    EmailModule,
   ],
   providers: [
     {
@@ -26,6 +26,7 @@ import * as multer from 'multer';
       useClass: HttpErrorFilter,
     }
   ],
+  controllers: [],
 })
 export class AppModule {
   constructor(private readonly connection: Connection) {}

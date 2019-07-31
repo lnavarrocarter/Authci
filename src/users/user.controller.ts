@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Res, HttpStatus, Param, NotFoundException, Put, Query, Delete, UseGuards, UsePipes } from '@nestjs/common';
 import { UserServices } from './user.services';
 import { AuthGuard } from './../shared/auth.gaurd';
-import { ValidationPipe } from 'src/shared/validation.pipe';
+import { ValidationPipe } from './../shared/validation.pipe';
 import { UserDTO } from './create-user.dto';
 
 @Controller()

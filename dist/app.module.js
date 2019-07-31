@@ -26,7 +26,16 @@ let AppModule = class AppModule {
 AppModule = __decorate([
     common_1.Module({
         imports: [
-            typeorm_1.TypeOrmModule.forRoot(),
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'mysql',
+                host: 'ncai.cl',
+                port: 3306,
+                username: 'cnc46140_autci',
+                password: 'qweasd123',
+                database: 'cnc46140_authci',
+                entities: [__dirname + '/**/*.entity{.ts,.js}'],
+                synchronize: true,
+            }),
             common_1.MulterModule.register({
                 dest: '/uploads',
                 storage: multer.memoryStorage(),

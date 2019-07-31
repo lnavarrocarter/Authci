@@ -11,7 +11,16 @@ import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'ncai.cl',
+      port: 3306,
+      username: 'cnc46140_autci',
+      password: 'qweasd123',
+      database: 'cnc46140_authci',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
     MulterModule.register({
       dest: '/uploads',
       storage: multer.memoryStorage(),

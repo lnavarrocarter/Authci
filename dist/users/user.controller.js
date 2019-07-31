@@ -23,7 +23,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const user_services_1 = require("./user.services");
 const auth_gaurd_1 = require("./../shared/auth.gaurd");
-const validation_pipe_1 = require("src/shared/validation.pipe");
+const validation_pipe_1 = require("./../shared/validation.pipe");
 const create_user_dto_1 = require("./create-user.dto");
 let UserController = class UserController {
     constructor(userService) {

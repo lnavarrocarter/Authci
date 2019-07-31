@@ -41,6 +41,11 @@ yarn-error.log
 testem.log
 /typings
 
+
+#dependencies
+/node_modules
+ormconfig.json
+
 # System Files
 .DS_Store
 Thumbs.db

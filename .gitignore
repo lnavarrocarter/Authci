@@ -46,6 +46,7 @@ testem.log
 /node_modules
 ormconfig.json
 /uploads/*
+/sercrets
 
 # System Files
 .DS_Store

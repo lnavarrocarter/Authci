@@ -12,9 +12,7 @@ async function bootstrap() {
     key: fs.readFileSync('./secrets/private.key'),
     cert: fs.readFileSync('./secrets/certificate.crt'),
   };
-  const app = await NestFactory.create(AppModule, {
-    httpsOptions,
-  });
+  const app = await NestFactory.create(AppModule); //{ httpsOptions,}
   app.enableCors ({
     origin: '*',
     });

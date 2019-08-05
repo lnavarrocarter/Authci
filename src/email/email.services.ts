@@ -42,5 +42,29 @@ export class EmailServices {
             "preview" : nodemailer.getTestMessageUrl(info)
           }
     }
+
+    async sendEmailAttachment(bodyHtml: any, subjetc: string, attch: any,nameattach: any){
+      let info = await this.transporter.sendMail({
+        from: '"Ncai 👻" <website@ncai.cl>', // sender address
+        to: "info@ncai.cl", // list of receivers
+        subject: subjetc, // Subject line
+        html: bodyHtml, // html body
+        attachments : [
+          {   // use URL as an attachment
+            filename: 'imagen.png',
+            path: 'http://localhost:3100/api/uploads/4b72ca30be1868cfcad32f016fbbc7798986add6'
+        },
+        ]
+      });
+
+      console.log("Message sent: %s", info.messageId);
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
+      return {
+        "status" : "Message sent",
+        "messageId" : info.messageId,
+        "preview" : nodemailer.getTestMessageUrl(info)
+      }
+    }
     
 }

@@ -19,4 +19,18 @@ export class EmailController{
             } );
         }
     }
+
+    @Post('send/attachment')
+    async sendmailattachment(@Res() res, @Body() data: any){
+        console.log(res.connection.remoteAddress)
+        if(this.emailServices.verify()){
+            await this.emailServices.sendEmailAttachment(data.html, data.subjet,data.base64,data.name).then((r) => {
+                console.log(r);
+                return res.status(HttpStatus.OK).json({
+                    message : 'Correo con adjunto enviado correctamente',
+                    data : r,
+                });
+            } ); 
+        }
+    }
 }

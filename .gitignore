@@ -45,6 +45,7 @@ testem.log
 #dependencies
 /node_modules
 ormconfig.json
+/uploads/*
 
 # System Files
 .DS_Store

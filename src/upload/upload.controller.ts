@@ -1,13 +1,14 @@
-import { Controller, Post, UseInterceptors, FileInterceptor, UploadedFile, Get, Param, Res, Request, MulterModule } from '@nestjs/common';
+import { Controller, Post, UseInterceptors, FileInterceptor, UploadedFile, Get, Param, Res, Request, MulterModule, HttpStatus, HttpException } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { UploadServices } from './upload.services';
 
 
-@Controller('Upload')
+@Controller('api/uploads')
 export class UploadController {
-    constructor() {}
+    constructor( private UploadServ: UploadServices) {}
 
-    @Post()
+    @Post('up')
     @UseInterceptors(FileInterceptor('files', {
         storage: diskStorage({
             destination: './uploads'
@@ -19,14 +20,20 @@ export class UploadController {
             }
         })
     }))
-    async uploadFile(@UploadedFile() file, @Request() req) {
-        console.log(file);
-        console.log(req.files)
-        //fs.createReadStream('./../uploads/' + file.originalname).pipe(fs.createWriteStream('./../uploads/files/'+ file.originalname));
+    async uploadFile(@UploadedFile() file, @Request() req,@Res() res) {
+        //console.log(file);
+        const resp = await this.UploadServ.saveUpload(file);
+
+        return res.status(HttpStatus.OK).json({
+            message : 'Se ha subido correctamente el archivo',
+            upload : resp,
+        });
     }
 
-    @Get()
-    seeUploadFile(@Param('impath') image, @Res() res) {
-        return res.sendFile(image, {root : 'uploads'})
+    @Get(':encodeName')
+    async seeUploadFile(@Param('encodeName') encodeName, @Res() res) {
+        const file = await this.UploadServ.getFile(encodeName) 
+        console.log(file);
+        return res.sendFile(file.filename, {root : 'uploads'})
     }
 }

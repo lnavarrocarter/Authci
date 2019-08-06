@@ -2,12 +2,13 @@ import { Module, MulterModule } from '@nestjs/common';
 import { UserModule } from './users/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpErrorFilter } from './shared/http-error.filter';
 import { UploadModule } from './upload/upload.module';
 
 import * as multer from 'multer';
 import { EmailModule } from './email/email.module';
+import { LoggingInterceptor } from './shared/logging.interceptor';
 
 @Module({
   imports: [

@@ -1,14 +1,18 @@
-import { Controller, Post, UseInterceptors, FileInterceptor, UploadedFile, Get, Param, Res, Request, MulterModule, HttpStatus, HttpException } from '@nestjs/common';
+import { Controller, Post, UseInterceptors, FileInterceptor, UploadedFile, Get, Param, Res, Request, MulterModule, HttpStatus, HttpException, UseGuards } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { UploadServices } from './upload.services';
+import { AuthGuard } from 'src/shared/auth.gaurd';
+import { User } from 'src/users/user.decorator';
 
 
-@Controller('api/uploads')
+@Controller('api')
 export class UploadController {
     constructor( private UploadServ: UploadServices) {}
 
-    @Post('up')
+    
+    @Post('files/upload')
+    @UseGuards(new AuthGuard())
     @UseInterceptors(FileInterceptor('files', {
         storage: diskStorage({
             destination: './uploads'
@@ -20,20 +24,38 @@ export class UploadController {
             }
         })
     }))
-    async uploadFile(@UploadedFile() file, @Request() req,@Res() res) {
-        //console.log(file);
-        const resp = await this.UploadServ.saveUpload(file);
-
+    async uploadFile(@User('id') user, @UploadedFile() file,@Res() res) {
+        console.log(user);
+        const resp = await this.UploadServ.saveUpload(user, file);
+        console.log(resp);
         return res.status(HttpStatus.OK).json({
             message : 'Se ha subido correctamente el archivo',
             upload : resp,
         });
     }
 
-    @Get(':encodeName')
-    async seeUploadFile(@Param('encodeName') encodeName, @Res() res) {
+    @Get('files/:encodeName')
+    async getUploadFile(@Param('encodeName') encodeName, @Res() res) {
         const file = await this.UploadServ.getFile(encodeName) 
-        console.log(file);
-        return res.sendFile(file.filename, {root : 'uploads'})
+        return res.sendFile(file.filename, {
+            root : 'uploads',
+            headers : {
+                'x-timestamp': Date.now(),
+                'x-sent': true,
+                'name': file.originalname,
+                'origin':'Authci'
+            }
+        })
+    }
+
+
+    @UseGuards(new AuthGuard())
+    @Get("files")
+    async getAlluploadFile(@User('id') user,@Res() res){
+        const files = await this.UploadServ.getAllFiles();
+        return res.status(HttpStatus.OK).json({
+            message : 'Listado de archivo disponibles',
+            upload : files,
+        });
     }
 }

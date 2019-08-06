@@ -43,7 +43,7 @@ export class EmailServices {
           }
     }
 
-    async sendEmailAttachment(bodyHtml: any, subjetc: string, attch: any,nameattach: any){
+    async sendEmailAttachment(bodyHtml: any, subjetc: string, adjunto: any,nameattach: any){
       let info = await this.transporter.sendMail({
         from: '"Ncai 👻" <website@ncai.cl>', // sender address
         to: "info@ncai.cl", // list of receivers
@@ -51,9 +51,9 @@ export class EmailServices {
         html: bodyHtml, // html body
         attachments : [
           {   // use URL as an attachment
-            filename: 'imagen.png',
-            path: 'http://localhost:3100/api/uploads/4b72ca30be1868cfcad32f016fbbc7798986add6'
-        },
+            filename: nameattach,
+            path: adjunto,
+          },
         ]
       });
 

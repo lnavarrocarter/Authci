@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, BeforeInsert } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, BeforeInsert, ManyToOne } from 'typeorm';
 import * as sha1 from 'js-sha1';
+import { UserEntity } from 'src/users/user.entity';
 
 
 @Entity('uploads')
@@ -26,14 +27,26 @@ export class UploadEntity {
      @Column()
      encodefile: string;
 
+     @ManyToOne(type  => UserEntity, author => author.upload)
+     author: UserEntity;
+
      @BeforeInsert()
      private sha1EncodeFile(){
          this.encodefile = sha1(this.originalname);
+         this.path = "/api/file/" + this.encodefile;
      }
 
-     toResponseObject() {
-         const { id, created, originalname, path, encodefile, filename } = this;
-         const responseObject: any = { id, encodefile, filename , created, originalname, path}
+     toResponseObject(showParameters: boolean = false) {
+         const { id, created, originalname, path, filename, author } = this;
+         const responseObject: any = {
+             id,
+             created,
+             originalname,
+             path,
+            }
+        if(showParameters){
+            responseObject.filename = filename;
+        }
          return responseObject;
      }
 } 

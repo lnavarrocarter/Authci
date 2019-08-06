@@ -7,7 +7,7 @@ import { AnyAaaaRecord } from 'dns';
 export class ValidationPipe implements PipeTransform<any> {
   async transform(value: any, metadata: ArgumentMetadata) {
     if(value instanceof Object && this.isEmpty(value)){
-        throw new HttpException('Error en la validacion: no se envia por el body', HttpStatus.BAD_REQUEST);
+        throw new HttpException('Error en la validacion: No tiene los parametros necesarios', HttpStatus.BAD_REQUEST);
     }
 
     const {metatype} = metadata

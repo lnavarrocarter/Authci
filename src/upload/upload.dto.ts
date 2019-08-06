@@ -1,4 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
+import { UserRO } from 'src/users/create-user.dto';
 
 export class UpDTO {
 
@@ -18,4 +19,6 @@ export class UpRO {
     created : Date;
     filename: string;
     encodefile: string;
+    originalname: string;
+    author: UserRO;
 }

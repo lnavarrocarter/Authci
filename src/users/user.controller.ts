@@ -3,14 +3,16 @@ import { UserServices } from './user.services';
 import { AuthGuard } from './../shared/auth.gaurd';
 import { ValidationPipe } from './../shared/validation.pipe';
 import { UserDTO } from './create-user.dto';
+import { User } from './user.decorator';
 
 @Controller()
 export class UserController {
     constructor(public userService: UserServices) {}
     @Get('api/users')
-    @UsePipes(new ValidationPipe())
     @UseGuards(new AuthGuard())
-    async showAllUser(@Res() res) {
+    @UsePipes(new ValidationPipe())
+    async showAllUser(@User() user, @Res() res) {
+        console.log(user);
         const allUsers = await this.userService.showAll();
         return res.status(HttpStatus.OK).json({
             message : 'Usuario(s) encontrado(s) correctamente.',

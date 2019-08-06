@@ -13,8 +13,8 @@ export class UserServices {
     private userRepository: Repository<UserEntity>,
     ) {}
 
-  async showOne(id: number): Promise<UserRO> {
-    const user  = await this.userRepository.findOne({ where : { id }});
+  async showOne(codeId: string): Promise<UserRO> {
+    const user  = await this.userRepository.findOne({ where : { codeId }});
     if (!user) {
       throw new HttpException('Error en la consulta del usuario', HttpStatus.BAD_REQUEST);
     }

@@ -17,8 +17,10 @@ export class UpDTO {
 export class UpRO {
     id: string;
     created : Date;
-    filename: string;
-    encodefile: string;
     originalname: string;
-    author: UserRO;
+    author?: UserRO;
+    encondefile: string;
+    path: string;
+    location?:string;
+    key?: string;
 }

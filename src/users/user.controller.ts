@@ -5,14 +5,13 @@ import { ValidationPipe } from './../shared/validation.pipe';
 import { UserDTO } from './create-user.dto';
 import { User } from './user.decorator';
 
-@Controller()
+@Controller("api")
 export class UserController {
     constructor(public userService: UserServices) {}
-    @Get('api/users')
+    @Get('users')
     @UseGuards(new AuthGuard())
     @UsePipes(new ValidationPipe())
     async showAllUser(@User() user, @Res() res) {
-        console.log(user);
         const allUsers = await this.userService.showAll();
         return res.status(HttpStatus.OK).json({
             message : 'Usuario(s) encontrado(s) correctamente.',
@@ -20,7 +19,7 @@ export class UserController {
         });
     }
 
-    @Get('api/users/:id')
+    @Get('users/:id')
     @UseGuards(new AuthGuard())
     @UsePipes(new ValidationPipe())
     async showOneUser(@Param('id') id, @Res() res) {
@@ -30,18 +29,4 @@ export class UserController {
             user : User,
         });
     }
-
-    @Post('login')
-    @UsePipes(new ValidationPipe())
-    async login(@Body() data: UserDTO) {
-        return await this.userService.login(data);
-    }
-
-    @Post('register')
-    @UsePipes(new ValidationPipe())
-    async register(@Body() data: UserDTO) {
-        return await this.userService.register(data);
-    }
-
-
 }

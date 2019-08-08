@@ -8,17 +8,18 @@ import { UploadModule } from './upload/upload.module';
 
 import * as multer from 'multer';
 import { EmailModule } from './email/email.module';
-import { LoggingInterceptor } from './shared/logging.interceptor';
+import { AuthModule } from './auth/auth.module';
+
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'ncai.cl',
+      host: process.env.MYSQLHOST,
       port: 3306,
-      username: 'cnc46140_autci',
-      password: 'qweasd123',
-      database: 'cnc46140_authci',
+      username: process.env.MYSQLUSER,
+      password: process.env.MYSQLPASS,
+      database: process.env.MYSQLDB,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
@@ -26,6 +27,7 @@ import { LoggingInterceptor } from './shared/logging.interceptor';
       dest: '/uploads',
       storage: multer.memoryStorage(),
     }),
+    AuthModule,
     UserModule,
     UploadModule,
     EmailModule,

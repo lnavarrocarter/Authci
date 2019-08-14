@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    #crea la imagen y el contenedor a partirn de Dockerfile local
+    build: .
+    #este comando arraca nuestro contenedor en modo desarrollo y queda atento a los cambios
+    #de nuestros archivos
+    command: sh -c 'npm run start:dev'
+    #Hace un binding de nuestra carpeta local con la carpeta de nuestro contenedor donde
+    #tenemos la app
+    volumes:
+      - .:/authci
+    ports:
+      - "3100:3100"

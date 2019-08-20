@@ -24,7 +24,7 @@ export class UploadController {
     @Post('files/upload')
     @UseGuards(new AuthGuard())
     @UseInterceptors(FileInterceptor('files', {
-        /*storage: diskStorage({
+        storage: diskStorage({
             destination: './uploads'
             , filename: (req, file, cb) => {
             // Generating a 32 random chars long string
@@ -32,8 +32,8 @@ export class UploadController {
             //Calling the callback passing the random name generated with the original extension name
             cb(null, `${randomName}${extname(file.originalname)}`)
             }
-        })*/
-        storage: multerS3({
+        }),
+        /*storage: multerS3({
             s3: s3,
             bucket: AWS_S3_BUCKET_NAME,
             acl: 'public-read',
@@ -42,7 +42,7 @@ export class UploadController {
                 //Calling the callback passing the random name generated with the original extension name
                 cb(null, `${randomName}${extname(file.originalname)}`)
             },
-        }),
+        }),*/
     }))
     async uploadFile(@User('id') user, @UploadedFile() file,@Res() res) {
         console.log(file)

@@ -9,6 +9,7 @@ import { UploadModule } from './upload/upload.module';
 import * as multer from 'multer';
 import { EmailModule } from './email/email.module';
 import { AuthModule } from './auth/auth.module';
+import { RecordModule } from './record/record.model';
 
 
 @Module({
@@ -31,6 +32,7 @@ import { AuthModule } from './auth/auth.module';
     UserModule,
     UploadModule,
     EmailModule,
+    RecordModule,
   ],
   providers: [
     {

@@ -5,6 +5,8 @@ FROM node:10.13.0-alpine
 
 #instalamos Nest.Js
 RUN npm i -g @nestjs/cli
+RUN spec install git
+RUN git clone https://github.com/lnavarrocarter/authCI-js.git authci
 
 #crea la carpeta que tendre el codigo de nuestra app
 #Cambien "my_nest_app" por el nombre que quieran 

@@ -1,19 +1,21 @@
-version: '2'
+version: '3'
 services:
-  clock-backend:
-    #crea la imagen y el contenedor a partirn de Dockerfile local
+  authci:
+    container_name: NcaiAuthCi
+    image: lnavarrocarter/ncaiauthci
+    #crea la imagen y el contenedor a partir de Dockerfile local
     build: .
     #Hace un binding de nuestra carpeta local con la carpeta de nuestro contenedor donde
-    #enviroment:
-     # - PORT=3200
-     # - SECRET='ThisIsaSecretKeyToTheClient'
-     # - MYSQLHOST='ncai.cl'
-     # - MYSQLUSER='cnc46140_autci'
-     # - MYSQLPASS='qweasd123'
-     # - MYSQLDB='cnc46140_authci'
-     # - AWS_S3_BUCKET_NAME='jordans3'
-     # - AWS_ACCESS_KEY_ID='AKIAJ4M3D4UMBAGDJC2Q'
-     # - AWS_SECRET_ACCESS_KEY='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'
+    environment:
+      - PORT=3200
+      - SECRET='ThisIsaSecretKeyToTheClient'
+      - MYSQLHOST='ncai.cl'
+      - MYSQLUSER='cnc46140_autci'
+      - MYSQLPASS='qweasd123'
+      - MYSQLDB='cnc46140_authci'
+      - AWS_S3_BUCKET_NAME='jordans3'
+      - AWS_ACCESS_KEY_ID='AKIAJ4M3D4UMBAGDJC2Q'
+      - AWS_SECRET_ACCESS_KEY='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'
     #tenemos la app
     volumes:
       - .:/authci

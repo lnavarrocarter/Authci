@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/test
 # Only exists if Bazel was run
 /bazel-out
 
@@ -43,7 +44,7 @@ testem.log
 
 
 #dependencies
-/node_modules
+node_modules
 ormconfig.json
 /uploads/*
 /sercrets

@@ -13,5 +13,6 @@ RUN mkdir -p /authci
 #establece como directorio de trabajo nuestra carpeta 'my_nest_app'
 WORKDIR /authci
 
-#exponemos el puerto 3000 que es el que usa nest para acceder a la app
+#exponemos el puerto 3100 que es el que usa nest para acceder a la app
 EXPOSE 3100
+CMD ["npm", "run", "start:dev"]

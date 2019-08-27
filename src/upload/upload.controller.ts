@@ -54,34 +54,29 @@ export class UploadController {
         });
     }
 
-    @Get('files/:encodeName')
+    @Get("files/:type")
+    @UseGuards(new AuthGuard())
+    async getAllFiles(@Param('type') type,@User('id') user,@Res() res){
+        Logger.log(`UserId : ${user} && tipo: ${type}`)
+        let files;
+        if(type == "all"){
+            files = await this.UploadServ.getAllFiles();
+        }else if(type == "my"){
+            files = await this.UploadServ.getAllFiles(user);
+        }else{
+            throw new HttpException('Parametros Incorrectos para la busqueda.', HttpStatus.BAD_REQUEST);
+        }
+        return res.status(HttpStatus.OK).json({
+            message : 'Listado de archivo disponibles',
+            upload : files,
+        });
+    }
+
+    @Get('file/:encodeName')
     async getUploadFile(@Param('encodeName') encodeName, @Res() res) {
         const file = await this.UploadServ.getFile(encodeName);
         //return res.download(file.location, file.originalname);
         console.log(file);
         return res.sendFile(file.filename, { root: 'uploads'});
-    }
-
-
-    @UseGuards(new AuthGuard())
-    @Get("files")
-    async getAlluploadFile(@User('id') user,@Res() res){
-        Logger.log(`UserId : ${user}`)
-        const files = await this.UploadServ.getAllFiles();
-        return res.status(HttpStatus.OK).json({
-            message : 'Listado de archivo disponibles',
-            upload : files,
-        });
-    }
-
-    @UseGuards(new AuthGuard())
-    @Get("myfiles")
-    async getAlluploadFileByUser(@User('id') user,@Res() res){
-        Logger.log(`UserId : ${user}`)
-        const files = await this.UploadServ.getAllFiles(user);
-        return res.status(HttpStatus.OK).json({
-            message : 'Listado de archivo disponibles',
-            upload : files,
-        });
     }
 }

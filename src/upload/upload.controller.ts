@@ -28,10 +28,11 @@ export class UploadController {
             destination: './uploads'
             , filename: (req, file, cb) => {
             // Generating a 32 random chars long string
-            const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
+            const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+            const key = randomName + "."+ file.extension;
             //Calling the callback passing the random name generated with the original extension name
             cb(null, `${randomName}${extname(file.originalname)}`)
-            }
+            },
         }),
         /*storage: multerS3({
             s3: s3,
@@ -56,7 +57,9 @@ export class UploadController {
     @Get('files/:encodeName')
     async getUploadFile(@Param('encodeName') encodeName, @Res() res) {
         const file = await this.UploadServ.getFile(encodeName);
-        return res.download(file.location, file.originalname);
+        //return res.download(file.location, file.originalname);
+        console.log(file);
+        return res.sendFile(file.filename, { root: 'uploads'});
     }
 
 

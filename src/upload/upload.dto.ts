@@ -22,5 +22,5 @@ export class UpRO {
     encondefile: string;
     path: string;
     location?:string;
-    key?: string;
+    filename?: string;
 }

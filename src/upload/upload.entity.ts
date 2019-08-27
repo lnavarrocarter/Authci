@@ -14,15 +14,11 @@ export class UploadEntity {
      @Column()
      location: string;
 
-     @Column({
-        type: 'varchar',
-        unique: true,
-        width: 200,
-    })
+     @Column()
      originalname: string;
      
      @Column()
-     key: string;
+     filename: string;
 
      @Column()
      path: string;
@@ -38,12 +34,13 @@ export class UploadEntity {
 
      @BeforeInsert()
      private sha1EncodeFile(){
-         this.encodefile = sha1(this.originalname);
+         this.encodefile = sha1(this.originalname + Date.now());
          this.path = "/api/files/" + this.encodefile;
+         
      }
 
      toResponseObject(showParameters: boolean = false) {
-         const { id, created, originalname, location, key, author, encodefile, path } = this;
+         const { id, created, originalname, location, filename, author, encodefile, path } = this;
          const responseObject: any = {
              id,
              created,
@@ -53,7 +50,7 @@ export class UploadEntity {
              author: author.toResponseObject(false),
             }
         if(showParameters){
-            responseObject.key = key;
+            responseObject.filename = filename;
             responseObject.location = location;
         }
          return responseObject;

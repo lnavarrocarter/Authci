@@ -1,7 +1,9 @@
-#Dockerfile para contenedor de nodejs y nestjs
+#Dockerfile para contenedor de nodejs y nestjs 
+#Author: Luis Navarro Carter
+#Contact : lnavarro.carter@ncai.cl
 
 #From nos permite tener una imagen base para nuestro nuevo contenedor
-FROM node:10.13.0-alpine
+FROM node:10.15.3-alpine
 
 #instalamos Nest.Js
 RUN npm i -g @nestjs/cli
@@ -14,9 +16,10 @@ RUN mkdir -p /authci
 WORKDIR /authci
 ADD package.json /authci/package.json
 RUN npm config set registry http://registry.npmjs.org
-RUN npm install -g
+RUN npm install -g --force 
 
 ADD . /authci
+RUN npm install -g nodemon@1.18.10
 
 #exponemos el puerto 3100 que es el que usa nest para acceder a la app
 EXPOSE 3100

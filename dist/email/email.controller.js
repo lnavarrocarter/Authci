@@ -40,6 +40,20 @@ let EmailController = class EmailController {
             }
         });
     }
+    sendmailattachment(res, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(res.connection.remoteAddress);
+            if (this.emailServices.verify()) {
+                yield this.emailServices.sendEmailAttachment(data.html, data.subjet, data.base64, data.name).then((r) => {
+                    console.log(r);
+                    return res.status(common_1.HttpStatus.OK).json({
+                        message: 'Correo con adjunto enviado correctamente',
+                        data: r,
+                    });
+                });
+            }
+        });
+    }
 };
 __decorate([
     common_1.Post('send'),
@@ -48,6 +62,13 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], EmailController.prototype, "sendemail", null);
+__decorate([
+    common_1.Post('send/attachment'),
+    __param(0, common_1.Res()), __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], EmailController.prototype, "sendmailattachment", null);
 EmailController = __decorate([
     common_1.Controller('api/email'),
     __metadata("design:paramtypes", [email_services_1.EmailServices])

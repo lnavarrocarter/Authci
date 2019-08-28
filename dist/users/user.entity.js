@@ -20,15 +20,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const sha1 = require("js-sha1");
+const upload_entity_1 = require("src/upload/upload.entity");
 let UserEntity = class UserEntity {
     hashPassword() {
         return __awaiter(this, void 0, void 0, function* () {
             this.password = yield bcrypt.hash(this.password, 8);
+            this.codeId = yield sha1(this.username + this.created);
         });
     }
     toResponseObject(showToken = true) {
-        const { id, created, username, token } = this;
-        const responseObject = { id, created, username };
+        const { codeId, created, username, token } = this;
+        const responseObject = { codeId, created, username };
         if (showToken) {
             responseObject.token = `Bearer ${token}`;
         }
@@ -54,6 +57,10 @@ __decorate([
     __metadata("design:type", Number)
 ], UserEntity.prototype, "id", void 0);
 __decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], UserEntity.prototype, "codeId", void 0);
+__decorate([
     typeorm_1.CreateDateColumn(),
     __metadata("design:type", Date)
 ], UserEntity.prototype, "created", void 0);
@@ -69,6 +76,10 @@ __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
 ], UserEntity.prototype, "password", void 0);
+__decorate([
+    typeorm_1.OneToMany(type => upload_entity_1.UploadEntity, upload => upload.author),
+    __metadata("design:type", Array)
+], UserEntity.prototype, "upload", void 0);
 __decorate([
     typeorm_1.BeforeInsert(),
     __metadata("design:type", Function),

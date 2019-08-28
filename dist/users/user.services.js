@@ -28,9 +28,9 @@ let UserServices = class UserServices {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
-    showOne(id) {
+    showOne(codeId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.userRepository.findOne({ where: { id } });
+            const user = yield this.userRepository.findOne({ where: { codeId } });
             if (!user) {
                 throw new common_1.HttpException('Error en la consulta del usuario', common_1.HttpStatus.BAD_REQUEST);
             }

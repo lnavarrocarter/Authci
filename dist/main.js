@@ -20,9 +20,7 @@ function bootstrap() {
             key: fs.readFileSync('./secrets/private.key'),
             cert: fs.readFileSync('./secrets/certificate.crt'),
         };
-        const app = yield core_1.NestFactory.create(app_module_1.AppModule, {
-            httpsOptions,
-        });
+        const app = yield core_1.NestFactory.create(app_module_1.AppModule);
         app.enableCors({
             origin: '*',
         });

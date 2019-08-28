@@ -20,25 +20,28 @@ let AuthGuard = class AuthGuard {
     canActivate(context) {
         return __awaiter(this, void 0, void 0, function* () {
             const request = context.switchToHttp().getRequest();
-            if (!request.headers.authorization) {
-                return false;
+            if (request) {
+                if (!request.headers.authorization) {
+                    return false;
+                }
+                request.user = yield this.validateToken(request.headers.authorization);
+                return true;
             }
-            request.user = yield this.validateToken(request.headers.authorization);
-            return true;
         });
     }
     validateToken(auth) {
         return __awaiter(this, void 0, void 0, function* () {
             if (auth.split(' ')[0] !== 'Bearer') {
-                throw new common_1.HttpException('Token Invalido', common_1.HttpStatus.FORBIDDEN);
+                throw new common_1.HttpException('Invalid token', common_1.HttpStatus.UNAUTHORIZED);
             }
             const token = auth.split(' ')[1];
             try {
-                const decode = jwt.verify(token, process.env.SECRET);
+                const decoded = yield jwt.verify(token, process.env.SECRET);
+                return decoded;
             }
             catch (err) {
-                const message = 'Token : ' + (err.message || err.name);
-                throw new common_1.HttpException(message, common_1.HttpStatus.FORBIDDEN);
+                const message = 'Token error: ' + (err.message || err.name);
+                throw new common_1.HttpException(message, common_1.HttpStatus.UNAUTHORIZED);
             }
         });
     }

@@ -16,10 +16,13 @@ RUN mkdir -p /authci
 WORKDIR /authci
 ADD package.json /authci/package.json
 RUN npm config set registry http://registry.npmjs.org
-RUN npm install -g --force 
+RUN npm install -g --force
+RUN npm install -g nodemon@1.18.10 
 
 ADD . /authci
-RUN npm install -g nodemon@1.18.10
+
+RUN chmod 711 -R /authci
+
 
 #exponemos el puerto 3100 que es el que usa nest para acceder a la app
 EXPOSE 3100

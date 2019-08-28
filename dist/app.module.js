@@ -18,6 +18,8 @@ const http_error_filter_1 = require("./shared/http-error.filter");
 const upload_module_1 = require("./upload/upload.module");
 const multer = require("multer");
 const email_module_1 = require("./email/email.module");
+const auth_module_1 = require("./auth/auth.module");
+const record_model_1 = require("./record/record.model");
 let AppModule = class AppModule {
     constructor(connection) {
         this.connection = connection;
@@ -28,11 +30,11 @@ AppModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'mysql',
-                host: 'ncai.cl',
+                host: process.env.MYSQLHOST,
                 port: 3306,
-                username: 'cnc46140_autci',
-                password: 'qweasd123',
-                database: 'cnc46140_authci',
+                username: process.env.MYSQLUSER,
+                password: process.env.MYSQLPASS,
+                database: process.env.MYSQLDB,
                 entities: [__dirname + '/**/*.entity{.ts,.js}'],
                 synchronize: true,
             }),
@@ -40,9 +42,11 @@ AppModule = __decorate([
                 dest: '/uploads',
                 storage: multer.memoryStorage(),
             }),
+            auth_module_1.AuthModule,
             user_module_1.UserModule,
             upload_module_1.UploadModule,
             email_module_1.EmailModule,
+            record_model_1.RecordModule,
         ],
         providers: [
             {

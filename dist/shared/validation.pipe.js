@@ -21,7 +21,7 @@ let ValidationPipe = class ValidationPipe {
     transform(value, metadata) {
         return __awaiter(this, void 0, void 0, function* () {
             if (value instanceof Object && this.isEmpty(value)) {
-                throw new common_1.HttpException('Error en la validacion: no se envia por el body', common_1.HttpStatus.BAD_REQUEST);
+                throw new common_1.HttpException('Error en la validacion: No tiene los parametros necesarios', common_1.HttpStatus.BAD_REQUEST);
             }
             const { metatype } = metadata;
             if (!metatype || !this.toValidate(metatype)) {

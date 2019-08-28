@@ -24,12 +24,12 @@ const common_1 = require("@nestjs/common");
 const user_services_1 = require("./user.services");
 const auth_gaurd_1 = require("./../shared/auth.gaurd");
 const validation_pipe_1 = require("./../shared/validation.pipe");
-const create_user_dto_1 = require("./create-user.dto");
+const user_decorator_1 = require("./user.decorator");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    showAllUser(res) {
+    showAllUser(user, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const allUsers = yield this.userService.showAll();
             return res.status(common_1.HttpStatus.OK).json({
@@ -47,28 +47,18 @@ let UserController = class UserController {
             });
         });
     }
-    login(data) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.userService.login(data);
-        });
-    }
-    register(data) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.userService.register(data);
-        });
-    }
 };
 __decorate([
-    common_1.Get('api/users'),
-    common_1.UsePipes(new validation_pipe_1.ValidationPipe()),
+    common_1.Get('users'),
     common_1.UseGuards(new auth_gaurd_1.AuthGuard()),
-    __param(0, common_1.Res()),
+    common_1.UsePipes(new validation_pipe_1.ValidationPipe()),
+    __param(0, user_decorator_1.User()), __param(1, common_1.Res()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "showAllUser", null);
 __decorate([
-    common_1.Get('api/users/:id'),
+    common_1.Get('users/:id'),
     common_1.UseGuards(new auth_gaurd_1.AuthGuard()),
     common_1.UsePipes(new validation_pipe_1.ValidationPipe()),
     __param(0, common_1.Param('id')), __param(1, common_1.Res()),
@@ -76,24 +66,8 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "showOneUser", null);
-__decorate([
-    common_1.Post('login'),
-    common_1.UsePipes(new validation_pipe_1.ValidationPipe()),
-    __param(0, common_1.Body()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.UserDTO]),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "login", null);
-__decorate([
-    common_1.Post('register'),
-    common_1.UsePipes(new validation_pipe_1.ValidationPipe()),
-    __param(0, common_1.Body()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.UserDTO]),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "register", null);
 UserController = __decorate([
-    common_1.Controller(),
+    common_1.Controller("api"),
     __metadata("design:paramtypes", [user_services_1.UserServices])
 ], UserController);
 exports.UserController = UserController;

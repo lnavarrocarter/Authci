@@ -59,6 +59,29 @@ let EmailServices = class EmailServices {
             };
         });
     }
+    sendEmailAttachment(bodyHtml, subjetc, adjunto, nameattach) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let info = yield this.transporter.sendMail({
+                from: '"Ncai 👻" <website@ncai.cl>',
+                to: "info@ncai.cl",
+                subject: subjetc,
+                html: bodyHtml,
+                attachments: [
+                    {
+                        filename: nameattach,
+                        path: adjunto,
+                    },
+                ]
+            });
+            console.log("Message sent: %s", info.messageId);
+            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+            return {
+                "status": "Message sent",
+                "messageId": info.messageId,
+                "preview": nodemailer.getTestMessageUrl(info)
+            };
+        });
+    }
 };
 EmailServices = __decorate([
     common_1.Injectable()

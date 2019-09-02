@@ -1,4 +1,4 @@
-version: '3'
+version: '4'
 services:
   authci:
     container_name: NcaiAuthCi
@@ -16,6 +16,11 @@ services:
       - AWS_S3_BUCKET_NAME='jordans3'
       - AWS_ACCESS_KEY_ID='AKIAJ4M3D4UMBAGDJC2Q'
       - AWS_SECRET_ACCESS_KEY='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'
+      - SMTP_HOST='ncai.cl'
+      - SMTP_POST='465'
+      - SMTP_USER='website@ncai.cl'
+      - SMTP_PASS='m^74$&Tc5yLx'
+      - SMTP_SECURE='true'
     #tenemos la app
     volumes:
       - .:/authci

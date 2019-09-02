@@ -7,6 +7,7 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     if (request) {
       if (!request.headers.authorization) {
+        throw new HttpException('undefined autorization token', HttpStatus.UNAUTHORIZED);
         return false;
       }
       request.user = await this.validateToken(request.headers.authorization);

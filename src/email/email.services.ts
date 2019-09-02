@@ -24,13 +24,13 @@ export class EmailServices {
         }
       });
     }
-    async sendEmail(bodyHtml: any){
+    async sendEmail(data: any){
+          let { html, subject, email } = data
           let info = await this.transporter.sendMail({
             from: '"Website Ncai 👻" <website@ncai.cl>', // sender address
-            to: "info@ncai.cl", // list of receivers
-            subject: "Hello ✔️ You Have a Question 😍😍 from website..", // Subject line
-            text: "Nuevo Mensaje de tu Web", // plain text body
-            html: bodyHtml // html body
+            to: "info@ncai.cl," + email, // list of receivers
+            subject: subject, // Subject line
+            html: html // html body
           });
         
           console.log("Message sent: %s", info.messageId);

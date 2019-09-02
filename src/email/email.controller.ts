@@ -10,10 +10,10 @@ export class EmailController{
     async sendemail(@Res() res, @Body() data: any){
         console.log(res.connection.remoteAddress);
         if(this.emailServices.verify()){
-            await this.emailServices.sendEmail(data.html).then((r) => {
+            await this.emailServices.sendEmail(data).then((r) => {
                 console.log(r);
                 return res.status(HttpStatus.OK).json({
-                    message : 'Correo enviado correctamente',
+                    message : 'Correo enviado correctamente a ',
                     data : r,
                 });
             } );

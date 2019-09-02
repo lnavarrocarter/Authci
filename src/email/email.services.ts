@@ -5,12 +5,12 @@ import * as nodemailer from "nodemailer";
 @Injectable()
 export class EmailServices {
     transporter: any = nodemailer.createTransport({
-        host: "ncai.cl",
-        port: 465,
-        secure: true, // true for 465, false for other ports
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_POST,
+        secure: process.env.SMTP_SECURE, // true for 465, false for other ports
         auth: {
-          user: 'website@ncai.cl', // generated ethereal user
-          pass: 'm^74$&Tc5yLx' // generated ethereal password
+          user: process.env.SMTP_USER, // generated ethereal user
+          pass: process.env.SMTP_PASS, // generated ethereal password
         }
       });
 

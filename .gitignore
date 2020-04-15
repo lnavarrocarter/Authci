@@ -2,6 +2,8 @@
 
 # compiled output
 /dist
+/node_modules
+/test
 /tmp
 /out-tsc
 /test

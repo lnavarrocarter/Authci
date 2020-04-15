@@ -2,7 +2,7 @@ import { Module, MulterModule } from '@nestjs/common';
 import { UserModule } from './users/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER } from '@nestjs/core';
 import { HttpErrorFilter } from './shared/http-error.filter';
 import { UploadModule } from './upload/upload.module';
 
@@ -11,16 +11,18 @@ import { EmailModule } from './email/email.module';
 import { AuthModule } from './auth/auth.module';
 import { RecordModule } from './record/record.model';
 
+import { enviroment } from './env.config';
+
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.MYSQLHOST,
+      host: enviroment.MYSQLHOST,
       port: 3306,
-      username: process.env.MYSQLUSER,
-      password: process.env.MYSQLPASS,
-      database: process.env.MYSQLDB,
+      username: enviroment.MYSQLUSER,
+      password: enviroment.MYSQLPASS,
+      database: enviroment.MYSQLDB,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),

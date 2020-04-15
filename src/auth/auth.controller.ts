@@ -1,5 +1,5 @@
 import { Controller, Post, UsePipes, ValidationPipe, Body } from "@nestjs/common";
-import { UserDTO } from "dist/users/create-user.dto";
+import { UserDTO } from "./../users/create-user.dto";
 import { UserServices } from "src/users/user.services";
 
 
@@ -17,5 +17,11 @@ export class AuthController {
     @UsePipes(new ValidationPipe())
     async register(@Body() data: UserDTO) {
         return await this.userService.register(data);
+    }
+
+    @Post('recovery')
+    @UsePipes(new ValidationPipe())
+    async recovery(@Body() data: UserDTO) {
+        return "hola"
     }
 }

@@ -9,7 +9,7 @@ import { User } from './user.decorator';
 export class UserController {
     constructor(public userService: UserServices) {}
     @Get('users')
-    @UseGuards(new AuthGuard())
+    //@UseGuards(new AuthGuard())
     @UsePipes(new ValidationPipe())
     async showAllUser(@User() user, @Res() res) {
         const allUsers = await this.userService.showAll();

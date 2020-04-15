@@ -12,6 +12,8 @@ import { AuthModule } from './auth/auth.module';
 import { RecordModule } from './record/record.model';
 
 import { enviroment } from './env.config';
+import { TicketController } from './ticket/ticket.controller';
+import { TicketModule } from './ticket/ticket.module';
 
 
 @Module({
@@ -35,6 +37,7 @@ import { enviroment } from './env.config';
     UploadModule,
     EmailModule,
     RecordModule,
+    TicketModule,
   ],
   providers: [
     {
@@ -42,7 +45,6 @@ import { enviroment } from './env.config';
       useClass: HttpErrorFilter,
     }
   ],
-  controllers: [],
 })
 export class AppModule {
   constructor(private readonly connection: Connection) {}
